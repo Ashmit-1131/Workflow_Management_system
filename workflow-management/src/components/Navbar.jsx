@@ -11,14 +11,22 @@ const Navbar = () => {
   const user = useSelector((state) => state.auth.user);
 
   const handleLogout = async () => {
-    await signOut(auth);
-    dispatch(logoutUser());
+    try {
+      await signOut(auth);
+      dispatch(logoutUser());
+    } catch (error) {
+      console.error("Error logging out:", error.message);
+    }
   };
 
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <Link to="/" className="navbar-logo">Home</Link>
+        {!user && ( 
+          <Link to="/" className="navbar-logo">
+            Home
+          </Link>
+        )}
       </div>
       <div className="navbar-right">
         {user ? (
@@ -28,14 +36,22 @@ const Navbar = () => {
               alt="Profile"
               className="navbar-profile"
             />
-            <span className="navbar-user">Welcome, {user.email}</span>
+            <span className="navbar-user">
+              Welcome, {user.displayName || user.email}
+            </span>
             <button className="navbar-btn" onClick={handleLogout}>
               Logout
             </button>
           </>
         ) : (
-          // When not logged in, no sign in buttons are displayed.
-          <></>
+          <>
+            <Link to="/login" className="navbar-btn">
+              Login
+            </Link>
+            <Link to="/register" className="navbar-btn">
+              Register
+            </Link>
+          </>
         )}
       </div>
     </nav>

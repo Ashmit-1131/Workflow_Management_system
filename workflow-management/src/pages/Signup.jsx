@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Container, Paper, Typography, TextField, Button, Box } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../store/authSlice";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -23,14 +24,44 @@ const Signup = () => {
   };
 
   return (
-    <div className="auth-container">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSignup}>
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        <button type="submit">Sign Up</button>
-      </form>
-    </div>
+    <Container maxWidth="sm" sx={{ mt: 8 }}>
+      <Paper elevation={3} sx={{ p: 4 }}>
+        <Typography variant="h4" component="h1" gutterBottom align="center">
+          Sign Up
+        </Typography>
+        <Box component="form" onSubmit={handleSignup} noValidate>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            label="Email"
+            type="email"
+            variant="outlined"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            label="Password"
+            type="password"
+            variant="outlined"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            sx={{ mt: 3 }}
+          >
+            Sign Up
+          </Button>
+        </Box>
+      </Paper>
+    </Container>
   );
 };
 

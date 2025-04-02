@@ -16,32 +16,34 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Handle email/password login
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      dispatch(loginUser(userCredential.user));
-      // Redirect to home page after successful login
-      navigate("/");
-    } catch (error) {
-      console.error("Error logging in:", error.message);
-      // Optionally redirect to login page on error or display an error message
-      navigate("/login");
-    }
-  };
+// Handle email/password login
+const handleLogin = async (e) => {
+  e.preventDefault();
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    dispatch(loginUser(userCredential.user));
+    // Redirect to workflow page after successful login
+    navigate("/workflows");
+  } catch (error) {
+    console.error("Error logging in:", error.message);
+    // Optionally redirect to login page on error or display an error message
+    navigate("/login");
+  }
+};
 
-  // Handle Google login
-  const handleGoogleLogin = async () => {
-    try {
-      const provider = new GoogleAuthProvider();
-      const userCredential = await signInWithPopup(auth, provider);
-      dispatch(loginUser(userCredential.user));
-      navigate("/");
-    } catch (error) {
-      console.error("Error with Google sign in:", error.message);
-    }
-  };
+// Handle Google login
+const handleGoogleLogin = async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+    const userCredential = await signInWithPopup(auth, provider);
+    dispatch(loginUser(userCredential.user));
+    // Redirect to workflow page after successful Google login
+    navigate("/workflows");
+  } catch (error) {
+    console.error("Error with Google sign in:", error.message);
+  }
+};
+
 
   return (
     <div className="auth-container">
